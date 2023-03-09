@@ -3,14 +3,29 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 // Loading image JS native
 
-const image = new Image();
-const imageTexture = new THREE.Texture(image);
+// const image = new Image();
+// const imageTexture = new THREE.Texture(image);
 
-image.onload = () => {
-  imageTexture.needsUpdate = true;
+// image.onload = () => {
+//   imageTexture.needsUpdate = true;
+// };
+
+// image.src = "/textures/door/color.jpg";
+const loadManager = new THREE.LoadingManager();
+loadManager.onStart = () => {
+  console.log("onStart");
 };
-
-image.src = "/textures/door/color.jpg";
+loadManager.onLoad = () => {
+  console.log("onLoad");
+};
+loadManager.onProgress = () => {
+  console.log("onProgress");
+};
+loadManager.onError = () => {
+  console.log("onError");
+};
+const textureLoader = new THREE.TextureLoader(loadManager);
+const imageTexture = textureLoader.load("/textures/door/color.jpg");
 
 /**
  * Base
